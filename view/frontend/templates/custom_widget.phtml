@@ -1,0 +1,60 @@
+<?php
+    $status = $block->isEnable();
+    $item_config = number_format($block->getNumberBestSellerConfig());
+    $items = $block->getProductBestSeller($item_config);
+    $currencySymbols = $block->getStoreCurrency();
+    $count = 0;
+?>
+<?php
+    if ($status) {
+        echo "<h2 class='bestseller-title'>Best Seller</h2>";
+        echo "<ul class='bestseller'>";
+        foreach ($items as $item) {
+            $id = $item['product_id'];
+            $count++;
+            $product_url = $block->getProductUrl($item->getProductId());
+            echo "<li id='bestseller-item'>";
+            echo "<a href=". $product_url . " ><img src=" . $block->getImageBestSeller($item->getProductId()) . "></a>";
+            echo "<a href=". $product_url . " ><p class='bestseller-name'>" . $item->getProductName() . "</p></a>";
+            echo "<p class='bestseller-price'>" .$currencySymbols. number_format($item->getProductPrice(),2) . "</p>";
+            echo "<p class='bestseller-order'>" . 'Ordered: ' . number_format($item->getQtyOrdered()) . "</p>";
+            echo "</li>";
+        }
+        echo '</ul>';
+        echo "<div class='showmore'>";
+        echo "<button id='show-more'" .">Show more</button>";
+        echo '</div>';
+        $lastId = $id;
+    }
+?>
+
+<script type="text/javascript">
+require(['jquery',
+], function ($) {
+    $(document).ready(function () {
+        $(document).on('click', '#show-more', function () {
+            var customurl = "<?php echo $this->getUrl().'bestseller/index/index'?>";
+            var test2 = "<?= $lastId ?>"
+            var test = "<?php echo "<a href=". $product_url . " ><img src=" . $block->getImageBestSeller($item->getProductId()) . "></a>" ?>";
+            $('#show-more').html("Loading...");
+            $.ajax({
+                url: customurl,
+                type: "POST",
+                data: {test2: test2},
+                dataType: "json",
+                success: function (data)
+                {
+                    $('.showmore').html(data);
+                    if (data != '')
+                    {
+                        $('.bestseller').append(data);
+                    }
+                    $('#show-more').remove();
+                }
+            });
+        });
+    });
+});
+</script>
+
+    

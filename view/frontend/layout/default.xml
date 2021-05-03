@@ -1,0 +1,8 @@
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <!-- <referenceContainer name="content">
+          <block class="AHT\BestSeller\Block\BestSeller" before="-" cacheable="false" name="bestseller" template="AHT_BestSeller::bestseller_modal.phtml">
+          </block>
+        </referenceContainer> -->
+    </body>
+</page>

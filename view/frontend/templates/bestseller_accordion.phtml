@@ -1,0 +1,49 @@
+<div id="accordion" data-mage-init='{
+        "accordion":{
+            "active": [1, 2],
+            "collapsible": true,
+            "openedState": "active",
+            "multipleCollapsible": true
+        }}'>
+
+        <?php
+    $status = $block->isEnable();
+    $items = $block->getProductBestSeller();
+    $item_config = number_format($block->getNumberBestSellerConfig());
+    $currencySymbols = $block->getStoreCurrency();
+    $count = 0;
+    ?>
+    <?php
+        if ($status) {
+            echo "<h2 class='bestseller-title'>Accordion</h2>";
+            echo "<ul class='bestseller'>";
+            foreach ($items as $item) {
+                $count++;
+                $product_url = $block->getProductUrl($item->getProductId());
+
+                ?>
+                <div data-role="collapsible">
+                        <div data-role="trigger">
+                        <?= "<p class='bestseller-name'>" . $item->getProductName() . "</p>"; ?>
+                        </div>
+                    </div>
+                    <div data-role="content">
+                        <?php 
+                            echo "<li id='bestseller-item'>";
+                            echo "<a href=". $product_url . " ><img src=" . $block->getImageBestSeller($item->getProductId()) . "></a>";
+                            echo "<a href=". $product_url . " ><p class='bestseller-name'>" . $item->getProductName() . "</p></a>";
+                            echo "<p class='bestseller-price'>" .$currencySymbols. number_format($item->getProductPrice(),2) . "</p>";
+                            echo "<p class='bestseller-order'>" . 'Ordered: ' . number_format($item->getQtyOrdered()) . "</p>";
+                            echo "</li>";
+                        ?>
+                    </div>
+                    <?php  } ?>
+            <!-- // echo '</ul>';
+            // echo "<div class='showmore'>";
+            // echo "<button id='show-more' onclick="."myFunction()".">Show more</button>";
+            // echo '</div>'; -->
+        <?php }
+    ?>
+
+    
+</div>
