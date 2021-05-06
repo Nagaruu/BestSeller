@@ -4,5 +4,9 @@
           <block class="AHT\BestSeller\Block\BestSeller" before="-" cacheable="false" name="bestseller" template="AHT_BestSeller::bestseller_modal.phtml">
           </block>
         </referenceContainer> -->
+        <!-- <referenceContainer name="content">
+          <block class="AHT\BestSeller\Block\BestSeller" after="-" cacheable="false" name="bestseller2" template="AHT_BestSeller::custom_widget.phtml">
+          </block>
+        </referenceContainer> -->
     </body>
 </page>

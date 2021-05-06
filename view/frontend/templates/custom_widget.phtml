@@ -24,7 +24,6 @@
         echo "<div class='showmore'>";
         echo "<button id='show-more'" .">Show more</button>";
         echo '</div>';
-        $lastId = $id;
     }
 ?>
 
@@ -34,19 +33,16 @@ require(['jquery',
     $(document).ready(function () {
         $(document).on('click', '#show-more', function () {
             var customurl = "<?php echo $this->getUrl().'bestseller/index/index'?>";
-            var test2 = "<?= $lastId ?>"
-            var test = "<?php echo "<a href=". $product_url . " ><img src=" . $block->getImageBestSeller($item->getProductId()) . "></a>" ?>";
             $('#show-more').html("Loading...");
             $.ajax({
                 url: customurl,
                 type: "POST",
-                data: {test2: test2},
-                dataType: "json",
+                dataType: "html",
                 success: function (data)
                 {
-                    $('.showmore').html(data);
                     if (data != '')
                     {
+                        console.log('abc');
                         $('.bestseller').append(data);
                     }
                     $('#show-more').remove();

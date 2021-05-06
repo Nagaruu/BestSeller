@@ -52,14 +52,14 @@ class BestSeller extends Template
     {
         return $this->scopeConfig->getValue('bestseller/general/numberbestseller', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
+    public function getNumberPageSize()
+    {
+        $bestSellerCollection = $this->_bestSellerFactory->create();
+        return $bestSellerCollection->count();    
+    }
     public function getProductBestSeller($item){
         $bestSellerCollection = $this->_bestSellerFactory->create();
         $bestSellerCollection->getSelect()->order('qty_ordered desc');
-        return $bestSellerCollection->setPageSize($item);
-    }
-    public function getProductBestSeller2($item){
-        $bestSellerCollection = $this->_bestSellerFactory->create();
-        $bestSellerCollection->getSelect()->order('qty_ordered asc');
         return $bestSellerCollection->setPageSize($item);
     }
     public function getProductUrl($id){

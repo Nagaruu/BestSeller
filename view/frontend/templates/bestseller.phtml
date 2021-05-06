@@ -1,7 +1,7 @@
 <?php
     $status = $block->isEnable();
     $item_config = number_format($block->getNumberBestSellerConfig());
-    $items = $block->getProductBestSeller($item_config);
+    $items = $block->getProductBestSeller($item_config,0);
     $currencySymbols = $block->getStoreCurrency();
     $count = 0;
 ?>
@@ -26,20 +26,14 @@
     }
 ?>
 
-<script>
-    require(["jquery"], function($){
-        var item_config = "<?= $item_config ?>";    
-        var item_count = "<?= $count ?>";
-        var signal = item_count - item_config;
-        var items = "<?= json_encode($block->getProductBestSeller($item_config)) ?>";  
-
-        $('#show-more').click(function() {
-            console.log("<?= "aaa" . json_encode($block->getProductBestSeller($item_config)) ?>");
-            // $.each( items, function( index, value ) {
-            //     alert( index + ": " + value );
-            // });
-            // $( "#show-more" ).remove();
-        });
-    });
+<script type="text/x-magento-init">
+    {
+        "#show-more": {
+            "AHT_BestSeller/js/custom": {
+                "itemCount": <?= $item_config  ?>,
+                "item": <?= number_format($block->getNumberPageSize()) ?>
+            } 
+        }
+    }
 </script>
 
