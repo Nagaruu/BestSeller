@@ -1,7 +1,6 @@
 <?php
 namespace AHT\BestSeller\Block;
 use Magento\Framework\View\Element\Template;
-use Magento\Checkout\Model\CartFactory;
 
 class BestSeller extends Template
 {
@@ -28,7 +27,7 @@ class BestSeller extends Template
      */
     public function __construct(
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
-        Template\Context $context,CartFactory $_cart,
+        Template\Context $context,
         \Magento\Sales\Model\ResourceModel\Report\Bestsellers\CollectionFactory $_bestSellerFactory,
         \Magento\Catalog\Helper\ImageFactory $imageHelperFactory,
         \Magento\Framework\Locale\CurrencyInterface $localeCurrency,
@@ -61,6 +60,11 @@ class BestSeller extends Template
         $bestSellerCollection = $this->_bestSellerFactory->create();
         $bestSellerCollection->getSelect()->order('qty_ordered desc');
         return $bestSellerCollection->setPageSize($item);
+    }
+    public function getProductShowMore($item,$curpage){
+        $bestSellerCollection = $this->_bestSellerFactory->create();
+        $bestSellerCollection->getSelect()->order('qty_ordered desc');
+        return $bestSellerCollection->setPageSize($item)->setCurPage($curpage);
     }
     public function getProductUrl($id){
         $product_config = $this->configurable->getParentIdsByChild($id);

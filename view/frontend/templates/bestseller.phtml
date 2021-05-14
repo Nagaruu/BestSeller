@@ -24,6 +24,9 @@
         echo "<button id='show-more'".">Show more</button>";
         echo '</div>';
     }
+    // echo "<pre>";
+    // print_r($items->getData());
+    
 ?>
 
 <script type="text/x-magento-init">
@@ -31,7 +34,8 @@
         "#show-more": {
             "AHT_BestSeller/js/custom": {
                 "itemCount": <?= $item_config  ?>,
-                "item": <?= number_format($block->getNumberPageSize()) ?>
+                "item": <?= number_format($block->getNumberPageSize()) ?>,
+                "url": "bestseller/index/bestSeller"
             } 
         }
     }

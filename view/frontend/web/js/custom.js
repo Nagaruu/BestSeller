@@ -15,7 +15,6 @@
 
     $.widget('mage.list', {
         options: {
-            url: 'bestseller/index/bestSeller',
             method: 'post',
             pageNum: 1,
             triggerEvent: 'click'
@@ -27,7 +26,6 @@
                 $('#show-more').remove();
             }
             this._bind();
-            // console.log(self.options.itemCount);
         },
 
         _bind: function() {
@@ -40,7 +38,7 @@
 
         _isShow: function() {
             var self = this;
-            if(self.options.itemCount <= self.options.pageNum*self.options.pageNum) {
+            if(self.options.item <= self.options.itemCount * self.options.pageNum) {                
                 $('#show-more').remove();
             }
         },
@@ -54,7 +52,7 @@
                     pageNum: self.options.pageNum
                 },
                 
-                dataType: 'html',
+                dataType: 'json',
                 beforeSend: function() {
                     $('body').trigger('processStart');
                 },
@@ -62,11 +60,21 @@
                 success: function(res) {
                     if (res != '')
                     {   
-                        $('.bestseller').append(res);
+                        var obj = JSON.parse(res);       
+
+                        for(var k in obj) {
+                            $('.bestseller').append("<li id='bestseller-item'>"
+                                +"<a href="+ obj[k].url +"><img src=" + obj[k].src + "></a>"
+                                +"<a href="+ obj[k].url +"><p class='bestseller-name'>"+ obj[k].name +"</p></a>"
+                                +"<p class='bestseller-price'>"+ obj[k].price +"</p>"
+                                +"<p class='bestseller-order'>" + 'Ordered: ' + obj[k].ordered + "</p>"
+                            );
+                            $('.bestseller').append("</li>"); 
+                         }
+                           
                         self._isShow();
                     }
                     $('body').trigger('processStop');
-                    // $('#show-more').remove();
                 }
             });
         },
